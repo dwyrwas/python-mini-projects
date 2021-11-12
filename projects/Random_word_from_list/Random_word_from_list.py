@@ -8,22 +8,17 @@ else:
     filename = input("What is the name of the file? (extension included): ")
 
 try:
-    file = open(filename)
-except (FileNotFoundError, IOError):
+    file = open(filename,'r') #include argument to make sure that file is opened in read-only mode
+except (FileNotFoundError, IOError): # handle exception
     print("File doesn't exist!")
     exit()
-# handle exception
 
-# get number of lines
-num_lines = sum(1 for line in file if line.rstrip())
 
+# get lines
+lines = file.readlines() #Return all lines in the file, as a list where each line is an item in the list
 # generate a random number between possible interval
-random_line = random.randint(0, num_lines)
+random_line = random.randint(0, len(lines))
+#print the line we want
+print(lines[random_line].rstrip())
 
-# re-iterate from first line
-file.seek(0)
-
-for i, line in enumerate(file):
-    if i == random_line:
-        print(line.rstrip())  # rstrip removes any trailing newlines :)
-        break
+file.close() #close the file once we print the word we wanted
